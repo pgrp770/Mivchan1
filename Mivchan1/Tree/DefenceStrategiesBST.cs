@@ -15,16 +15,24 @@ namespace Mivchan1.Tree
         public Dictionary<DefenceStrategy, int> dictHelper = new Dictionary<DefenceStrategy, int>();
         public NodeP? Root { get; set; }
         public List<DefenceStrategy> Helper { get; set; } = [];
+
+        // Constractor 1
         public DefenceStrategiesBST(DefenceStrategy value)
         {
             Root = new NodeP(value);
         }
+
+        // Constractor 2
         public DefenceStrategiesBST() { }
+
+        // Insert new node in the tree
         public void Insert(DefenceStrategy value)
         {
-            Root = Insert(Root, value);
+            Root = InsertRecursion(Root, value);
         }
-        public NodeP Insert(NodeP? root, DefenceStrategy value)
+
+        // Helper function to Insert 
+        public NodeP InsertRecursion(NodeP? root, DefenceStrategy value)
         {
             if (root == null)
             {
@@ -32,33 +40,33 @@ namespace Mivchan1.Tree
             }
             if (root.Defence > value)
             {
-                root.Left = Insert(root.Left, value);
+                root.Left = InsertRecursion(root.Left, value);
             }
             if (root.Defence < value)
             {
-                root.Right = Insert(root.Right, value);
+                root.Right = InsertRecursion(root.Right, value);
             }
             return root;
         }
 
-
-
+        
         public void Print()
         {
             Console.WriteLine("Tree structure with left/right child distinctinos:");
 
             PreOrderPrint(Root, "Root");
         }
+       
         public void PreOrderPrint(NodeP root, string dir, string indintation = "|---")
         {
             if (root == null)
             {
                 return;
             }
+
             Console.WriteLine($"{indintation}{dir}: {root.Defence.ToString()}");
             PreOrderPrint(root.Left, "Left Child", "   " + indintation);
             PreOrderPrint(root.Right, "Right Child", "   " + indintation);
-
         }
         public List<DefenceStrategy> InOrder()
         {
